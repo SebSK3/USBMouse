@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}",
+                "/usr/include/**",
+                "/usr/local/include",
+                "/usr/src/linux/**"
+            ],
+            "intelliSenseMode": "linux-gcc-x64",
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "defines": [
+                "__KERNEL__"
+            ]
+        }
+    ],
+    "version": 4
+}

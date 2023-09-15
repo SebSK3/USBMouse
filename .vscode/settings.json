@@ -1,0 +1,14 @@
+{
+    "files.associations": {
+        "module.h": "c",
+        "kernel.h": "c",
+        "hid.h": "c",
+        "printk.h": "c",
+        "usb.h": "c",
+        "stdarg.h": "c",
+        "sysinfo.h": "c",
+        "input.h": "c",
+        "fstream": "c"
+    },
+    "C_Cpp.default.compilerPath": "/usr/bin/gcc",
+}
