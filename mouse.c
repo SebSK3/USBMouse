@@ -8,7 +8,7 @@
 #include <linux/printk.h>
 
 static struct usb_device_id mouse_table[] = {
-	{USB_DEVICE(0x3151, 0x3020)},
+	{USB_DEVICE(0x1038, 0x1702)},
 	{} /* Terminating entry */
 };
 MODULE_DEVICE_TABLE(usb, mouse_table);
