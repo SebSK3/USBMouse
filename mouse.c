@@ -57,25 +57,11 @@ static int mouse_prob(struct usb_interface *intf, const struct usb_device_id *id
     struct usb_host_endpoint *endpoint;
     struct usb_mouse *mouse;
 
-    // This interface does not support the mouse protocol
-    if (!(intf_desc->bInterfaceClass == USB_INTERFACE_CLASS_HID && intf_desc->bInterfaceSubClass == USB_INTERFACE_SUBCLASS_BOOT && intf_desc->bInterfaceProtocol == USB_INTERFACE_PROTOCOL_MOUSE)) {
-        printk(KERN_ERR "Not a USB mouse interface.\n");
-        return -ENODEV;
-    }
-
     // This interface supports the mouse protocol
     printk("Supported USB Mouse detected on probe.\n");
 
-    // Ensure there is only one endpoint
-    if (intf_desc->bNumEndpoints != 1)
-        return -ENODEV;
-
     // Get the endpoint
     endpoint = &intf->cur_altsetting->endpoint[0];
-
-    // Ensure the correct interrupt direction for this endpoint
-    if (!usb_endpoint_is_int_in(&endpoint->desc))
-        return -ENODEV;
 
     // Allocate the mouse struct to be passed as context
     mouse = kzalloc(sizeof(struct usb_mouse), GFP_KERNEL);
@@ -113,9 +99,7 @@ static int mouse_prob(struct usb_interface *intf, const struct usb_device_id *id
         endpoint->desc.bInterval);
     usb_set_intfdata(intf, mouse);
 
-    if (usb_submit_urb(mouse->urb, GFP_KERNEL)) {
-        return -EIO;
-    }
+	usb_submit_urb(mouse->urb, GFP_KERNEL);
 
     return 0;
 }
