@@ -53,7 +53,6 @@ static void mouse_irq(struct urb *urb) {
 }
 
 static int mouse_prob(struct usb_interface *intf, const struct usb_device_id *id) {
-    struct usb_interface_descriptor *intf_desc = &intf->cur_altsetting->desc;
     struct usb_device *udev = interface_to_usbdev(intf);
     struct usb_host_endpoint *endpoint;
     struct usb_mouse *mouse;
