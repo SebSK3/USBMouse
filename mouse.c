@@ -31,8 +31,7 @@ static void mouse_irq(struct urb *urb) {
     struct usb_mouse *mouse_context = urb->context;
     signed char *data_buf = mouse_context->data_buf;
 
-    printk("Mouse IRQ status=%d.\n", urb->status);
-    printk("%d %d %d %d %d %d %d %d", data_buf[0], data_buf[1], data_buf[2], data_buf[3], data_buf[4], data_buf[5], data_buf[6], data_buf[7]);
+    printk("Data received: %d %d %d %d %d %d %d %d", data_buf[0], data_buf[1], data_buf[2], data_buf[3], data_buf[4], data_buf[5], data_buf[6], data_buf[7]);
 
     // Handle buttons
     input_report_key(mouse_context->input_dev, BTN_LEFT, data_buf[0] & 1);
@@ -56,9 +55,6 @@ static int mouse_prob(struct usb_interface *intf, const struct usb_device_id *id
     struct usb_device *udev = interface_to_usbdev(intf);
     struct usb_host_endpoint *endpoint;
     struct usb_mouse *mouse;
-
-    // This interface supports the mouse protocol
-    printk("Supported USB Mouse detected on probe.\n");
 
     // Get the endpoint
     endpoint = &intf->cur_altsetting->endpoint[0];
@@ -125,15 +121,11 @@ static struct usb_driver mouse_driver = {
 
 int init_module(void) {
     int result;
-    pr_info("Mouse driver initiating.\n");
-
     // Register driver against the USB subsystem
     result = usb_register(&mouse_driver);
-
     return 0;
 }
 
 void cleanup_module(void) {
-    pr_info("Mouse driver clean up\n");
     usb_deregister(&mouse_driver);
 }
