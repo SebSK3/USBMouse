@@ -7,11 +7,15 @@
 #include <linux/slab.h>
 #include <linux/usb.h>
 
+MODULE_AUTHOR("Sebastian Kwaśniak");
+MODULE_AUTHOR("Anna Berkowska");
+MODULE_LICENSE("GPL");
+MODULE_DEVICE_TABLE(usb, mouse_table);
+
 static struct usb_device_id mouse_table[] = {
     { USB_DEVICE(0x1038, 0x1702) },
-    {} /* Terminating entry */
+    {} // Terminating entry
 };
-MODULE_DEVICE_TABLE(usb, mouse_table);
 
 struct usb_mouse {
     struct usb_device *usb_dev;
@@ -22,8 +26,7 @@ struct usb_mouse {
     char phys[64];
 };
 
-static void
-mouse_irq(struct urb *urb) {
+static void mouse_irq(struct urb *urb) {
     struct usb_mouse *mouse_context = urb->context;
     signed char *data_buf = mouse_context->data_buf;
 
@@ -54,9 +57,7 @@ mouse_irq(struct urb *urb) {
     }
 }
 
-static int
-mouse_prob(struct usb_interface *intf,
-    const struct usb_device_id *id) {
+static int mouse_prob(struct usb_interface *intf, const struct usb_device_id *id) {
     struct usb_interface_descriptor *intf_desc = &intf->cur_altsetting->desc;
     struct usb_device *udev = interface_to_usbdev(intf);
     struct usb_host_endpoint *endpoint;
@@ -181,6 +182,3 @@ void cleanup_module(void) {
     pr_info("Mouse driver clean up\n");
     usb_deregister(&mouse_driver);
 }
-
-MODULE_AUTHOR("Gary Li");
-MODULE_LICENSE("GPL");
