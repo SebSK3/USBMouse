@@ -39,14 +39,14 @@ static void mouse_irq(struct urb *urb) {
 
     printk("%d %d %d %d %d %d %d %d", data_buf[0], data_buf[1], data_buf[2], data_buf[3], data_buf[4], data_buf[5], data_buf[6], data_buf[7]);
 
-    input_report_key(mouse_context->input_dev, BTN_LEFT, data_buf[1] & 1);
-    input_report_key(mouse_context->input_dev, BTN_RIGHT, data_buf[1] & 2);
-    input_report_key(mouse_context->input_dev, BTN_MIDDLE, data_buf[1] & 4);
-    input_report_key(mouse_context->input_dev, BTN_SIDE, data_buf[1] & 8);
+    input_report_key(mouse_context->input_dev, BTN_LEFT, data_buf[0] & 1);
+    input_report_key(mouse_context->input_dev, BTN_RIGHT, data_buf[0] & 2);
+    input_report_key(mouse_context->input_dev, BTN_MIDDLE, data_buf[0] & 4);
+    input_report_key(mouse_context->input_dev, BTN_SIDE, data_buf[0] & 8);
 
-    input_report_rel(mouse_context->input_dev, REL_X, data_buf[2]);
-    input_report_rel(mouse_context->input_dev, REL_Y, data_buf[4]);
-    input_report_rel(mouse_context->input_dev, REL_WHEEL, data_buf[6]);
+    input_report_rel(mouse_context->input_dev, REL_X, data_buf[1]);
+    input_report_rel(mouse_context->input_dev, REL_Y, data_buf[3]);
+    input_report_rel(mouse_context->input_dev, REL_WHEEL, data_buf[5]);
 
     input_sync(mouse_context->input_dev);
 
