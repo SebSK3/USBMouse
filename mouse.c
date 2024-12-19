@@ -99,7 +99,7 @@ static int mouse_prob(struct usb_interface *intf, const struct usb_device_id *id
         endpoint->desc.bInterval);
     usb_set_intfdata(intf, mouse);
 
-	usb_submit_urb(mouse->urb, GFP_KERNEL);
+    usb_submit_urb(mouse->urb, GFP_KERNEL);
 
     return 0;
 }
